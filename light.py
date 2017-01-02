@@ -7,7 +7,7 @@ import os
 import datetime
 import json
 
-CHANNEL = os.environ['REDIS_TOPIC']
+TOPIC = os.getenv('REDIS_TOPIC', 'test-topic')
 REDIS_HOST = os.getenv('REDIS_PORT_6379_TCP_ADDR', 'localhost')
 REDIS_PORT = os.getenv('REDIS_PORT_6379_TCP_PORT', 6379)
 DT = float(os.getenv('DT', '1'))
@@ -47,7 +47,7 @@ if __name__ == "__main__":
                 'value': rc_time(pin_to_circuit)
             };
             print msg
-            r.publish(CHANNEL, json.dumps(msg))
+            r.publish(TOPIC, json.dumps(msg))
             time.sleep(DT)
     except KeyboardInterrupt:
         pass
